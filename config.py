@@ -12,5 +12,5 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['warren@bainsworld.com']
-    POSTS_PER_PAGE = 25
-
+    POSTS_PER_PAGE = 10
+    PASSWORD_RESET_EXPIRY = 600
