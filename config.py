@@ -14,3 +14,4 @@ class Config(object):
     ADMINS = ['warren@bainsworld.com']
     POSTS_PER_PAGE = 10
     PASSWORD_RESET_EXPIRY = 600
+    LANGUAGES = ['en', 'es']
