@@ -20,3 +20,4 @@ class Config(object):
     PASSWORD_RESET_EXPIRY = 600
     LANGUAGES = ['en', 'es']
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
