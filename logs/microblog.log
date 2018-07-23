@@ -102,3 +102,5 @@ elasticsearch.exceptions.NotFoundError: TransportError(404, 'index_not_found_exc
 2018-07-15 21:57:55,619 INFO: Microblog startup [in /Users/warrenbain/Projects/personal/microblog/app/__init__.py:78]
 2018-07-15 22:04:12,227 INFO: Microblog startup [in /Users/warrenbain/Projects/personal/microblog/app/__init__.py:78]
 2018-07-15 22:04:48,164 INFO: Microblog startup [in /Users/warrenbain/Projects/personal/microblog/app/__init__.py:78]
+2018-07-18 22:08:47,078 INFO: Microblog startup [in /Users/warrenbain/Projects/personal/microblog/app/__init__.py:78]
+2018-07-18 22:09:16,476 INFO: Microblog startup [in /Users/warrenbain/Projects/personal/microblog/app/__init__.py:78]

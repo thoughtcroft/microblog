@@ -35,9 +35,15 @@ nosetests.xml
 .project
 .pydevproject
 
+# Vagrant
+wazza/
+microblog/
+
+# Microblog specific
 venv
 app.db
 microblog.log*
 messages.pot
 set_env
 .env
+.pub
