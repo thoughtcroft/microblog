@@ -38,6 +38,7 @@ nosetests.xml
 # Vagrant
 wazza/
 microblog/
+.vagrant/
 
 # Microblog specific
 venv

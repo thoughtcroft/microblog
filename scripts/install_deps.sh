@@ -2,7 +2,7 @@
 
 # install base dependencies
 
-source /tmp/.env
+source /home/ubuntu/.env
 
 apt-get -y update
 apt-get -y upgrade

@@ -2,7 +2,6 @@
 
 # lock down the server firewall
 
-source /tmp/.env
 apt-get -y update
 apt-get install -y ufw
 ufw allow ssh

@@ -2,10 +2,8 @@
 
 # install the app
 
-USER=$1
-
-source /tmp/.env
-cd /home/${USER}
+source /home/ubuntu/.env
+cd /home/ubuntu
 if [ ! -d "microblog" ]; then
   git clone ${APP_REPOSITORY} microblog --quiet
 fi

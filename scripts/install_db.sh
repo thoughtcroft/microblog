@@ -17,12 +17,18 @@ echo "${HACK_TEXT}" > ${HACK_FILE}
 
 # create random passwords
 
-if ! grep -q MYSQL_ROOT_PASSWORD /tmp/.env 2>/dev/null; then
-  echo "export MYSQL_ROOT_PASSWORD=$(openssl rand -base64 12)" >> /tmp/.env
-  echo "export MYSQL_USER_PASSWORD=$(openssl rand -base64 12)" >> /tmp/.env
+ENV_FILE=/home/ubuntu/.env
+MYSQL_CREDS=$(cat <<CREDS
+export MYSQL_ROOT_PASSWORD=$(openssl rand -base64 12)
+export MYSQL_USER_PASSWORD=$(openssl rand -base64 12)
+CREDS
+)
+
+if ! grep -q MYSQL_ROOT_PASSWORD ${ENV_FILE} 2>/dev/null; then
+  echo "${MYSQL_CREDS}" >> ${ENV_FILE}
 fi
 
-source /tmp/.env
+source ${ENV_FILE}
 
 # install the database
 
