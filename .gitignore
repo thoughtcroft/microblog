@@ -48,3 +48,4 @@ messages.pot
 set_env
 .env
 .pub
+logs/
