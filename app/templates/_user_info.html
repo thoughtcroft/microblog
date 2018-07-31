@@ -1,0 +1,28 @@
+{% if user.about_me %}
+<p>
+  {{ user.about_me }}
+</p>
+{% endif %}
+{% if user.last_seen %}
+<p>
+  {{ _('Last seen on') }}: {{ moment(user.last_seen).format('lll') }}
+</p>
+{% endif %}
+<p>
+  {{ _('%(count)d followers', count=user.followers.count()) }},
+  {{ _('%(count)d following', count=user.followed.count()) }}
+</p>
+{% if user != current_user %}
+<p>
+  <a href="{{ url_for('main.send_message', recipient=user.username) }}">{{ _('Send private message') }}</a>
+</p>
+{% endif %}
+{% if not current_user.is_following(user) %}
+<p>
+  <a href="{{ url_for('main.follow', username=user.username) }}">{{ _('Follow') }}</a>
+</p>
+{% else %}
+<p>
+  <a href="{{ url_for('main.unfollow', username=user.username) }}">{{ _('Unfollow') }}</a>
+</p>
+{% endif %}
