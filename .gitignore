@@ -49,3 +49,4 @@ set_env
 .env
 .pub
 logs/
+*.rdb
