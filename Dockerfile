@@ -15,7 +15,7 @@ COPY app app
 COPY migrations migrations
 COPY microblog.py ./
 COPY config.py ./
-COPY scripts/boot.sh ./
+COPY scripts/docker_boot.sh ./boot.sh
 RUN chmod +x boot.sh
 
 ENV FLASK_APP microblog.py

@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "file", source: "scripts/install_app.sh", destination: "/tmp/install_app.sh"
   config.vm.provision "shell", inline: "sudo su - ubuntu -c '/bin/bash /tmp/install_app.sh'"
   config.vm.provision "shell", path: "scripts/secure_server.sh"
-  config.vm.provision "shell", path: "scripts/run_gunicorn.sh"
+  config.vm.provision "shell", path: "scripts/run_bg_workers.sh"
+  config.vm.provision "shell", path: "scripts/run_web_workers.sh"
   config.vm.provision "shell", path: "scripts/run_nginx.sh"
 end

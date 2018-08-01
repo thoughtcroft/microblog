@@ -2,7 +2,7 @@
 cd /home/microblog
 source venv/bin/activate
 while true; do
-    flask db upgrade
+    flask db upgrade 2>/dev/null
     if [ $? -eq 0 ]; then
         break
     fi

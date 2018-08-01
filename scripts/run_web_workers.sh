@@ -5,11 +5,11 @@
 SUPER_PATH=/etc/supervisor/conf.d
 SUPER_FILE=microblog.conf
 SUPER_CONTENT=$(cat <<EOF_SUPERVISOR
-[program:microblog]
+[program:microblog_web]
 command=/home/ubuntu/microblog/venv/bin/gunicorn -b localhost:8000 -w 4 microblog:app
 directory=/home/ubuntu/microblog
 user=ubuntu
-stdout_logfile=/var/log/microblog/gunicorn.log
+stdout_logfile=/var/log/microblog/web_worker.log
 redirect_stderr=true
 autostart=true
 autorestart=true

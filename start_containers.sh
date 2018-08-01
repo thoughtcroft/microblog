@@ -13,6 +13,8 @@ docker run --name mysql -d -e MYSQL_RANDOM_ROOT_PASSWORD=yes \
     -e MYSQL_PASSWORD=${MYSQL_PASSWORD} \
     mysql/mysql-server:5.7
 
+docker run --name redis -d -p 6379:6379 redis:3-alpine
+
 docker run --name microblog -d -p 8000:5000 --rm -e SECRET_KEY=${SECRET_KEY} \
     -e MAIL_SERVER=${MAIL_SERVER} -e MAIL_PORT=${MAIL_PORT} -e MAIL_USE_TLS=${MAIL_USE_TLS} \
     -e MAIL_USERNAME=${MAIL_PASSWORD} -e MAIL_PASSWORD=${MAIL_PASSWORD} \
@@ -20,4 +22,16 @@ docker run --name microblog -d -p 8000:5000 --rm -e SECRET_KEY=${SECRET_KEY} \
     -e DATABASE_URL=mysql+pymysql://microblog:${MYSQL_PASSWORD}@dbserver/microblog \
     --link elasticsearch:elasticsearch \
     -e ELASTICSEARCH_URL=http://elasticsearch:9200 \
+    --link redis:redis-server \
+    -e REDIS_URL=redis://redis-server:6379/0 \
     microblog:latest
+
+docker run --name rq-worker -d --rm -e SECRET_KEY=${SECRET_KEY} \
+    -e MAIL_SERVER=${MAIL_SERVER} -e MAIL_PORT=${MAIL_PORT} -e MAIL_USE_TLS=${MAIL_USE_TLS} \
+    -e MAIL_USERNAME=${MAIL_PASSWORD} -e MAIL_PASSWORD=${MAIL_PASSWORD} \
+    --link mysql:dbserver \
+    -e DATABASE_URL=mysql+pymysql://microblog:${MYSQL_PASSWORD}@dbserver/microblog \
+    --link redis:redis-server \
+    -e REDIS_URL=redis://redis-server:6379/0 \
+    --entrypoint venv/bin/rq \
+    microblog:latest worker -u redis://redis-server:6379/0 microblog-tasks
