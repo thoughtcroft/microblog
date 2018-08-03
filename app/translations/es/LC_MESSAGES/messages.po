@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-08-01 20:44+1000\n"
+"POT-Creation-Date: 2018-08-03 22:05+1000\n"
 "PO-Revision-Date: 2017-09-29 23:25-0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -322,16 +322,4 @@ msgstr "Ha ocurrido un error inesperado"
 #: app/templates/errors/500.html:5
 msgid "The administrator has been notified. Sorry for the inconvenience!"
 msgstr "El administrador ha sido notificado. ¡Lamentamos la inconveniencia!"
-
-#~ msgid "Search"
-#~ msgstr "Buscar"
-
-#~ msgid "Search Results"
-#~ msgstr "Resultados de Búsqueda"
-
-#~ msgid "Previous results"
-#~ msgstr "Resultados previos"
-
-#~ msgid "Next results"
-#~ msgstr "Resultados próximos"
 
