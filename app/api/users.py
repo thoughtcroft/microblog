@@ -1,10 +1,9 @@
-from flask import jsonify, request, url_for
+from flask import jsonify, request, url_for, g
 from app import db
 from app.api import bp
 from app.models import User
 from app.api.auth import token_auth
-from app.api.errors import bad_request
-
+from app.api.errors import bad_request, error_response
 
 
 @bp.route('/users/<int:id>', methods=['GET'])
@@ -62,6 +61,8 @@ def create_user():
 @token_auth.login_required
 def update_user(id):
     user = User.query.get_or_404(id)
+    if user != g.current_user:
+        return error_response(403)
     data = request.get_json() or {}
     if 'username' in data and data['username'] != user.username and \
             User.query.filter_by(username=data['username']).first():
