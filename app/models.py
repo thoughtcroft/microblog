@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from hashlib import md5
 from flask import current_app, url_for
 from flask_login import UserMixin
+from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 import redis
@@ -241,7 +242,7 @@ def load_user(id):
 
 
 class Post(SearchableMixin, db.Model):
-    __searchable__ = ['body']
+    __searchable__ = ['body', 'username']
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -250,6 +251,10 @@ class Post(SearchableMixin, db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+    @hybrid_property
+    def username(self):
+        return User.query.get(self.user_id).username
 
 
 class Message(db.Model):
