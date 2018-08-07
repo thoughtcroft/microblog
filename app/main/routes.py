@@ -1,6 +1,7 @@
+import os
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
-     jsonify, current_app
+     jsonify, current_app, send_from_directory
 from flask_login import login_required, current_user
 from flask_babel import _, get_locale
 from guess_language import guess_language
@@ -18,6 +19,12 @@ def before_request():
         db.session.commit()
         g.search_form = SearchForm()
     g.locale = str(get_locale())
+
+
+@bp.route('/favicon.ico')
+def favicon():
+    path = os.path.join(current_app.root_path, 'static')
+    return send_from_directory(path, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -44,21 +51,6 @@ def index():
     return render_template('index.html', title=_('Home'), form=form,
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
-
-
-@bp.route('/user/<username>')
-@login_required
-def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    page = request.args.get('page', 1, type=int)
-    posts = user.posts.order_by(Post.timestamp.desc()).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.user', username=user.username, page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('main.user', username=user.username, page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template('user.html', user=user, posts=posts.items,
-                           next_url=next_url, prev_url=prev_url)
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
@@ -148,11 +140,40 @@ def search():
                            next_url=next_url, prev_url=prev_url)
 
 
+@bp.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    posts = user.posts.order_by(Post.timestamp.desc()).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('main.user', username=user.username, page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('main.user', username=user.username, page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template('user.html', title=_('User'), user=user, posts=posts.items,
+                           next_url=next_url, prev_url=prev_url)
+
+
 @bp.route('/user/<username>/popup')
 @login_required
 def user_popup(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user_popup.html', user=user)
+
+
+@bp.route('/users')
+@login_required
+def users():
+    page = request.args.get('page', 1 , type=int)
+    users = User.query.order_by(User.username).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('main.users', page=posts.next_num) \
+        if users.has_next else None
+    prev_url = url_for('main.users', page=posts.prev_num) \
+        if users.has_prev else None
+    return render_template("users.html", title=_('Users'), users=users.items,
+                          next_url=next_url, prev_url=prev_url)
 
 
 @bp.route('/send_message/<recipient>', methods=['GET', 'POST'])
@@ -186,8 +207,9 @@ def messages():
         if messages.has_next else None
     prev_url = url_for('main.messages', page=messages.prev_num) \
         if messages.has_prev else None
-    return render_template('messages.html', messages=messages.items,
-                           next_url=next_url, prev_url=prev_url)
+    return render_template('messages.html', title=_('Messages'),
+                           messages=messages.items, next_url=next_url,
+                           prev_url=prev_url)
 
 
 @bp.route('/notifications')

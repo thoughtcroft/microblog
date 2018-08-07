@@ -50,3 +50,4 @@ set_env
 .pub
 logs/
 *.rdb
+.DS_Store
