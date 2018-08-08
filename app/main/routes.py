@@ -168,9 +168,9 @@ def users():
     page = request.args.get('page', 1 , type=int)
     users = User.query.order_by(User.username).paginate(
             page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.users', page=posts.next_num) \
+    next_url = url_for('main.users', page=users.next_num) \
         if users.has_next else None
-    prev_url = url_for('main.users', page=posts.prev_num) \
+    prev_url = url_for('main.users', page=users.prev_num) \
         if users.has_prev else None
     return render_template("users.html", title=_('Users'), users=users.items,
                           next_url=next_url, prev_url=prev_url)
